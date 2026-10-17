@@ -1,0 +1,77 @@
+{
+  "updatedAt": "2026-10-17T11:21:29.732687+00:00",
+  "items": [
+    {
+      "id": "realtime",
+      "title": "חילוץ שלד ומשוב בזמן אמת על סמארטפון",
+      "criterion": "≥ 15 FPS, השהיה ≤ 0.5 שנ׳",
+      "result": "ממתין לתוצאות מהטלפונים (לשונית בדיקה חיה)",
+      "status": "pending",
+      "decision": null
+    },
+    {
+      "id": "conditions",
+      "title": "זיהוי שלד יציב בתנאי צילום ביתיים",
+      "criterion": "סטייה ≤ 10° ב-90% מהפריימים",
+      "result": "ממתין לסרטוני cond_*",
+      "status": "pending",
+      "decision": null
+    },
+    {
+      "id": "classification",
+      "title": "הבחנה בין ביצוע תקין לשגוי (DTW + זוויות)",
+      "criterion": "זיהוי ≥ 80% מהשגויים, התרעות שווא ≤ 15%",
+      "result": "מתוכנן לדוח ההנדסי (03.03.27)",
+      "status": "open",
+      "decision": null
+    },
+    {
+      "id": "compensation",
+      "title": "זיהוי תנועת פיצוי: הישענות יתר קדימה בסקווט",
+      "criterion": "זיהוי ≥ 80%, התרעות שווא ≤ 15%. אישור פיזיותרפיסט",
+      "result": "ממתין לסרטוני lean_*",
+      "status": "pending",
+      "decision": null
+    },
+    {
+      "id": "reference",
+      "title": "הקלטת ייחוס אחת מול ממוצע של שלוש",
+      "criterion": "התרעות שווא ≤ 10%",
+      "result": "ממתין לסרטוני ref_*",
+      "status": "pending",
+      "decision": null
+    },
+    {
+      "id": "physio",
+      "title": "התאמת המדדים להערכת פיזיותרפיסט",
+      "criterion": "מתאם בין ציון המערכת לדירוג המטפל",
+      "result": "דורש פיזיותרפיסט. מתוכנן לשלב הבא",
+      "status": "open",
+      "decision": null
+    },
+    {
+      "id": "location",
+      "title": "מיקום העיבוד: מכשיר, שרת או שילוב",
+      "criterion": "השהיה, נתוני רשת, פרטיות",
+      "result": "ממתין לסרטונים",
+      "status": "pending",
+      "decision": null
+    },
+    {
+      "id": "apptech",
+      "title": "טכנולוגיית האפליקציה (ווב / Flutter / Kotlin)",
+      "criterion": "ביצועים מספיקים בפלטפורמה שנבחרה",
+      "result": "ממתין לבדיקת הביצועים בטלפונים",
+      "status": "pending",
+      "decision": null
+    },
+    {
+      "id": "database",
+      "title": "מסד נתונים: רלציוני מול מסמכים",
+      "criterion": "שאילתות ממשק המטפל, פשטות, ביצועים",
+      "result": "PostgreSQL נמדד: Q1 0.4 ms, Q2 0.86 ms, Q3 0.17 ms, Q4 0.28 ms, Q5 13.6 ms. מונגו ימדד ב-GitHub Actions.",
+      "status": "partial",
+      "decision": null
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "scale": {
+    "patients": 400,
+    "sessions": 25092,
+    "reps": 752760,
+    "template_source": "synthetic"
+  },
+  "queries_he": {
+    "Q1_patient_progress": "התקדמות מטופל: סיכום לכל אימון ב-30 הימים האחרונים",
+    "Q2_therapist_dashboard": "לוח המטפל: לכל מטופל, אימון אחרון, אימונים בשבוע ושיעור טעויות",
+    "Q3_inactive_patients": "התראה: מטופלים שלא התאמנו 3 ימים",
+    "Q4_session_detail": "פירוט אימון אחד כולל עקומת הזוויות של כל חזרה",
+    "Q5_weekly_lean_trend": "מגמה שבועית של הישענות יתר לכל מטופל (12 שבועות)"
+  },
+  "engines": {
+    "postgresql": {
+      "engine": "PostgreSQL",
+      "load_sec": 32.5,
+      "size_mb": 264.8,
+      "queries": {
+        "Q1_patient_progress": {
+          "median_ms": 0.4,
+          "p95_ms": 0.61,
+          "rows": 20
+        },
+        "Q2_therapist_dashboard": {
+          "median_ms": 0.86,
+          "p95_ms": 1.06,
+          "rows": 20
+        },
+        "Q3_inactive_patients": {
+          "median_ms": 0.17,
+          "p95_ms": 0.29,
+          "rows": 3
+        },
+        "Q4_session_detail": {
+          "median_ms": 0.28,
+          "p95_ms": 0.41,
+          "rows": 30
+        },
+        "Q5_weekly_lean_trend": {
+          "median_ms": 13.6,
+          "p95_ms": 17.1,
+          "rows": 256
+        }
+      }
+    }
+  },
+  "mongo_correctness_mock": {
+    "Q1_patient_progress": true,
+    "Q2_therapist_dashboard": true,
+    "Q3_inactive_patients": true,
+    "Q4_session_detail": true,
+    "Q5_weekly_lean_trend": true
+  },
+  "summary_he": "PostgreSQL נמדד: Q1 0.4 ms, Q2 0.86 ms, Q3 0.17 ms, Q4 0.28 ms, Q5 13.6 ms. מונגו ימדד ב-GitHub Actions."
+}

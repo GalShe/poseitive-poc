@@ -1,0 +1,8 @@
+# הסרטונים הגולמיים לא נשמרים בריפו (פרטיות, וגם נפח). נשמרות רק נקודות השלד שחולצו מהם.
+data/videos/*
+!data/videos/.gitkeep
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+node_modules/
