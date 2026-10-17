@@ -44,44 +44,84 @@
     "engines": {
       "postgresql": {
         "engine": "PostgreSQL",
-        "load_sec": 32.5,
-        "size_mb": 264.8,
+        "load_sec": 37.3,
+        "size_mb": 263.6,
         "queries": {
           "Q1_patient_progress": {
-            "median_ms": 0.4,
-            "p95_ms": 0.61,
+            "median_ms": 0.57,
+            "p95_ms": 0.72,
             "rows": 20
           },
           "Q2_therapist_dashboard": {
-            "median_ms": 0.86,
-            "p95_ms": 1.06,
+            "median_ms": 0.97,
+            "p95_ms": 1.18,
             "rows": 20
           },
           "Q3_inactive_patients": {
-            "median_ms": 0.17,
-            "p95_ms": 0.29,
+            "median_ms": 0.27,
+            "p95_ms": 0.36,
             "rows": 3
           },
           "Q4_session_detail": {
-            "median_ms": 0.28,
+            "median_ms": 0.38,
+            "p95_ms": 0.5,
+            "rows": 30
+          },
+          "Q5_weekly_lean_trend": {
+            "median_ms": 18.62,
+            "p95_ms": 19.9,
+            "rows": 256
+          }
+        }
+      },
+      "mongodb": {
+        "engine": "MongoDB",
+        "load_sec": 4.0,
+        "size_mb": 213.0,
+        "queries": {
+          "Q1_patient_progress": {
+            "median_ms": 0.92,
+            "p95_ms": 0.98,
+            "rows": 20
+          },
+          "Q2_therapist_dashboard": {
+            "median_ms": 4.3,
+            "p95_ms": 4.45,
+            "rows": 20
+          },
+          "Q3_inactive_patients": {
+            "median_ms": 0.72,
+            "p95_ms": 0.73,
+            "rows": 3
+          },
+          "Q4_session_detail": {
+            "median_ms": 0.39,
             "p95_ms": 0.41,
             "rows": 30
           },
           "Q5_weekly_lean_trend": {
-            "median_ms": 13.6,
-            "p95_ms": 17.1,
+            "median_ms": 18.34,
+            "p95_ms": 28.1,
             "rows": 256
           }
         }
       }
     },
-    "mongo_correctness_mock": {
+    "same_answers": {
       "Q1_patient_progress": true,
       "Q2_therapist_dashboard": true,
       "Q3_inactive_patients": true,
       "Q4_session_detail": true,
       "Q5_weekly_lean_trend": true
     },
-    "summary_he": "PostgreSQL נמדד: Q1 0.4 ms, Q2 0.86 ms, Q3 0.17 ms, Q4 0.28 ms, Q5 13.6 ms. מונגו ימדד ב-GitHub Actions."
+    "pg_to_mongo_ratio": {
+      "Q1_patient_progress": 0.62,
+      "Q2_therapist_dashboard": 0.23,
+      "Q3_inactive_patients": 0.38,
+      "Q4_session_detail": 0.97,
+      "Q5_weekly_lean_trend": 1.02
+    },
+    "winner": "PostgreSQL",
+    "summary_he": "PostgreSQL. כל 5 השאילתות מחזירות תשובות זהות בשני המסדים; היחס הגרוע ביותר PG/Mongo: 1.02 (Q5_weekly_lean_trend)."
   }
 }
