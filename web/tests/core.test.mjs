@@ -26,7 +26,7 @@ for (const [k, t] of [[90, 25], [120, 40], [95, 60]]) {
 }
 const c = new SquatRepCounter();
 let t = 0;
-for (let rep = 0; rep < 3; rep++) for (const k of [175, 150, 120, 100, 90, 90, 100, 130, 165, 175]) c.push({ kneeAngle: k, leanExcess: k < 110 ? 30 : 0, trunkAngle: 0, tibiaAngle: 0, minVis: 0.9 }, (t += 100));
+for (let rep = 0; rep < 3; rep++) for (const k of [175, 150, 120, 100, 90, 90, 100, 130, 165, 175]) c.push({ kneeAngle: k, leanExcess: k < 110 ? 45 : 0, trunkAngle: 0, tibiaAngle: 0, minVis: 0.9 }, (t += 100));
 assert.equal(c.reps.length, 3);
 assert.ok(c.reps.every((r) => r.leanFault && r.deepEnough));
 const a = Array.from({ length: 60 }, (_, i) => 130 + 45 * Math.cos((2 * Math.PI * i) / 59));

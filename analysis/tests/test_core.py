@@ -80,7 +80,7 @@ def synthetic_session(n_reps=5, fps=30, min_knee=90, lean_peak=5.0, hold=1.5, re
 
 
 def test_rep_counter_counts_and_flags():
-    df = synthetic_session(n_reps=4, lean_peak=35)
+    df = synthetic_session(n_reps=4, lean_peak=50)
     reps = T.reps_from_frames(df)
     assert len(reps) == 4
     assert all(r.lean_fault for r in reps)
@@ -114,7 +114,7 @@ def test_compensation_and_reference(tmp_path):
     for i in range(1, 4):
         p = tmp_path / f"ref_{i}.csv"; synthetic_session(5, lean_peak=5, seed=i).to_csv(p, index=False); ex[f"ref_{i}"] = p
     for i in range(1, 3):
-        p = tmp_path / f"lean_{i}.csv"; synthetic_session(5, lean_peak=35, seed=10 + i).to_csv(p, index=False); ex[f"lean_{i}"] = p
+        p = tmp_path / f"lean_{i}.csv"; synthetic_session(5, lean_peak=50, seed=10 + i).to_csv(p, index=False); ex[f"lean_{i}"] = p
     comp = T.test_compensation(ex)
     assert comp["detection_rate"] == 1.0 and comp["false_alarm_rate"] == 0.0 and comp["passed"]
     ref = T.test_reference(ex)

@@ -9,7 +9,7 @@ DEFAULT_CONFIG = dict(
     down_angle=120.0,
     target_depth=90.0,
     depth_tolerance=15.0,
-    lean_threshold=20.0,
+    lean_threshold=38.0,  # כויל בבדיקה החיה הראשונה: תקין 16–29°, נשען 49°
     min_visibility=0.5,
 )
 
