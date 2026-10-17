@@ -173,14 +173,20 @@ def test_compensation(extracted: dict[str, Path], threshold=DEFAULT_CONFIG["lean
     det = float((bad > threshold).mean())
     fa = float((good > threshold).mean())
     # הסף שממקסם (זיהוי − התרעות שווא) על הנתונים שנאספו – הצעה לסף, לאישור הפיזיותרפיסט
-    cands = np.unique(np.concatenate([bad, good]))
-    best = max(cands, key=lambda c: (bad > c).mean() - (good > c).mean())
+    if bad.min() > good.max():
+        # הפרדה מלאה: הסף המוצע הוא אמצע הפער בין החזרה התקינה הגבוהה ביותר לשגויה הנמוכה ביותר
+        best = (good.max() + bad.min()) / 2
+    else:
+        cands = np.unique(np.concatenate([bad, good]))
+        best = max(cands, key=lambda c: (bad > c).mean() - (good > c).mean())
     return dict(
         criterion=f"זיהוי ≥ {min_detect:.0%}, התרעות שווא ≤ {max_false_alarm:.0%}",
         threshold=threshold, faulty_reps=len(bad), correct_reps=len(good),
         detection_rate=round(det, 3), false_alarm_rate=round(fa, 3),
         lean_correct_mean=round(float(good.mean()), 1), lean_faulty_mean=round(float(bad.mean()), 1),
         suggested_threshold=round(float(best), 1),
+        correct_range=[round(float(good.min()), 1), round(float(good.max()), 1)],
+        faulty_range=[round(float(bad.min()), 1), round(float(bad.max()), 1)],
         passed=bool(det >= min_detect and fa <= max_false_alarm),
     )
 

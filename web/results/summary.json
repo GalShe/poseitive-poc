@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-17T11:54:32.684914+00:00",
+  "updatedAt": "2026-10-17T12:06:30.441798+00:00",
   "items": [
     {
       "id": "realtime",
@@ -21,25 +21,25 @@
       "id": "classification",
       "title": "הבחנה בין ביצוע תקין לשגוי (DTW + זוויות)",
       "criterion": "זיהוי ≥ 80% מהשגויים, התרעות שווא ≤ 15%",
-      "result": "מתוכנן לדוח ההנדסי (03.03.27)",
-      "status": "open",
+      "result": "ראשוני: זוהו 90% מהחזרות השגויות (DTW על זווית הברך)",
+      "status": "partial",
       "decision": null
     },
     {
       "id": "compensation",
       "title": "זיהוי תנועת פיצוי: הישענות יתר קדימה בסקווט",
       "criterion": "זיהוי ≥ 80%, התרעות שווא ≤ 15%. אישור פיזיותרפיסט",
-      "result": "ממתין לסרטוני lean_*",
-      "status": "pending",
-      "decision": null
+      "result": "זיהוי 90%, התרעות שווא 0% (סף 38.0°, סף מוצע 31.6°)",
+      "status": "pass",
+      "decision": "מדד גו מול שוק מצילום צידי"
     },
     {
       "id": "reference",
       "title": "הקלטת ייחוס אחת מול ממוצע של שלוש",
       "criterion": "התרעות שווא ≤ 10%",
-      "result": "ממתין לסרטוני ref_*",
-      "status": "pending",
-      "decision": null
+      "result": "ייחוס יחיד: 17% התרעות שווא; ממוצע של 3: 0%",
+      "status": "pass",
+      "decision": "ייחוס ממוצע של 3 הקלטות"
     },
     {
       "id": "physio",
@@ -53,9 +53,9 @@
       "id": "location",
       "title": "מיקום העיבוד: מכשיר, שרת או שילוב",
       "criterion": "השהיה, נתוני רשת, פרטיות",
-      "result": "ממתין לסרטונים",
-      "status": "pending",
-      "decision": null
+      "result": "שרת: 13.4 ms לפריים. העלאת וידאו: ~6447.0 kbps לעומת 65.3 kbps לנקודות שלד",
+      "status": "pass",
+      "decision": "עיבוד במכשיר; לשרת נשלחים רק מדדים"
     },
     {
       "id": "apptech",

@@ -1,6 +1,42 @@
 {
   "model": "lite",
-  "videos": {},
+  "videos": {
+    "lean_1": {
+      "frames": 682,
+      "video_fps": 29.997800747745767,
+      "detected": 630,
+      "inference_ms_median": 14.646440000433358,
+      "inference_ms_p95": 20.443382999474125
+    },
+    "lean_2": {
+      "frames": 629,
+      "video_fps": 29.99761545187187,
+      "detected": 582,
+      "inference_ms_median": 13.199540999266901,
+      "inference_ms_p95": 18.129125000086788
+    },
+    "ref_1": {
+      "frames": 730,
+      "video_fps": 29.997945346209164,
+      "detected": 691,
+      "inference_ms_median": 13.360523999836005,
+      "inference_ms_p95": 18.700005000027886
+    },
+    "ref_2": {
+      "frames": 682,
+      "video_fps": 29.997800747745767,
+      "detected": 634,
+      "inference_ms_median": 13.600469000266457,
+      "inference_ms_p95": 19.512621000103536
+    },
+    "ref_3": {
+      "frames": 644,
+      "video_fps": 29.997670988277306,
+      "detected": 593,
+      "inference_ms_median": 12.443774000530539,
+      "inference_ms_p95": 17.133891999947082
+    }
+  },
   "accuracy": {
     "criterion": "סטייה ≤ 10° ב-90% מהפריימים",
     "per_video": [],
@@ -10,12 +46,64 @@
     "failing_conditions": []
   },
   "reference": {
-    "status": "pending",
-    "reason": "אין סרטוני ref_*"
+    "criterion": "התרעות שווא ≤ 10% על חזרות תקינות",
+    "correct_reps_total": 15,
+    "calib_reps": 6,
+    "test_reps": 6,
+    "single_reference": {
+      "threshold": 0.97,
+      "calib_mean": 0.45,
+      "calib_std": 0.26,
+      "test_distances": [
+        0.27,
+        1.02,
+        0.24,
+        0.71,
+        0.26,
+        0.56
+      ],
+      "false_alarm_rate": 0.167,
+      "passed": false,
+      "faulty_detected_rate": 0.8
+    },
+    "averaged_reference": {
+      "threshold": 1.08,
+      "calib_mean": 0.46,
+      "calib_std": 0.31,
+      "test_distances": [
+        0.17,
+        0.79,
+        0.19,
+        0.55,
+        0.18,
+        0.4
+      ],
+      "false_alarm_rate": 0.0,
+      "passed": true,
+      "faulty_detected_rate": 0.9
+    },
+    "recommendation": "ייחוס ממוצע של 3 הקלטות",
+    "passed": true
   },
   "compensation": {
-    "status": "pending",
-    "reason": "צריך גם סרטוני lean_* וגם סרטונים תקינים"
+    "criterion": "זיהוי ≥ 80%, התרעות שווא ≤ 15%",
+    "threshold": 38.0,
+    "faulty_reps": 10,
+    "correct_reps": 15,
+    "detection_rate": 0.9,
+    "false_alarm_rate": 0.0,
+    "lean_correct_mean": 21.9,
+    "lean_faulty_mean": 40.9,
+    "suggested_threshold": 31.6,
+    "correct_range": [
+      17.7,
+      25.6
+    ],
+    "faulty_range": [
+      37.6,
+      45.8
+    ],
+    "passed": true
   },
   "device": {
     "criterion": "≥ 15 FPS והשהיה ≤ 500 ms",
@@ -39,8 +127,16 @@
     "passed": true
   },
   "server": {
-    "server_inference_ms_median": null,
+    "server_inference_ms_median": 13.4,
     "landmarks_kbps": 65.3,
+    "frames_kbps": {
+      "original": 17968.0,
+      "640px": 6447.0
+    },
+    "upload_ratio_vs_landmarks": {
+      "original": 275,
+      "640px": 99
+    },
     "note": "בעיבוד במכשיר נשלחים לשרת רק המדדים בסיום האימון, והווידאו לא יוצא מהמכשיר (סיכון 4 בטבלה 4.3)."
   },
   "db": {
