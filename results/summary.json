@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-17T11:45:01.275855+00:00",
+  "updatedAt": "2026-10-17T11:54:32.684914+00:00",
   "items": [
     {
       "id": "realtime",
       "title": "חילוץ שלד ומשוב בזמן אמת על סמארטפון",
       "criterion": "≥ 15 FPS, השהיה ≤ 0.5 שנ׳",
-      "result": "ממתין לתוצאות מהטלפונים (לשונית בדיקה חיה)",
-      "status": "pending",
-      "decision": null
+      "result": "iPhone 13: 30.0 FPS, השהיה 38 ms",
+      "status": "pass",
+      "decision": "מנוע MediaPipe Pose Lite במכשיר"
     },
     {
       "id": "conditions",
@@ -61,9 +61,9 @@
       "id": "apptech",
       "title": "טכנולוגיית האפליקציה (ווב / Flutter / Kotlin)",
       "criterion": "ביצועים מספיקים בפלטפורמה שנבחרה",
-      "result": "ממתין לבדיקת הביצועים בטלפונים",
-      "status": "pending",
-      "decision": null
+      "result": "אפליקציית ווב עמדה בקריטריון על המכשירים שנבדקו. ווב היא הדרך האיטית ביותר להריץ את המנוע, ולכן התוצאה מחמירה",
+      "status": "pass",
+      "decision": "אפליקציית ווב (PWA) עם MediaPipe Tasks for Web"
     },
     {
       "id": "database",

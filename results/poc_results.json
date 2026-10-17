@@ -18,9 +18,25 @@
     "reason": "צריך גם סרטוני lean_* וגם סרטונים תקינים"
   },
   "device": {
-    "status": "pending",
-    "reason": "עוד לא התקבלו תוצאות מהטלפונים",
-    "on_device_video": []
+    "criterion": "≥ 15 FPS והשהיה ≤ 500 ms",
+    "devices": [
+      {
+        "file": "live_iPhone_13_2026-10-17-11-49-31.json",
+        "device": "iPhone 13",
+        "model": "lite",
+        "delegate": "GPU",
+        "resolution": "720x1280",
+        "fps": 30.0,
+        "inference_ms_median": 21,
+        "latency_ms_p95": 38,
+        "latency_kind": "capture",
+        "detection_rate": 0.956,
+        "passed": true
+      }
+    ],
+    "on_device_video": [],
+    "devices_tested": 1,
+    "passed": true
   },
   "server": {
     "server_inference_ms_median": null,

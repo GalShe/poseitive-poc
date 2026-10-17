@@ -1,0 +1,152 @@
+{
+  "kind": "live_performance_test",
+  "version": 1,
+  "createdAt": "2026-10-17T11:47:01.764Z",
+  "device": {
+    "deviceModel": "iPhone 13",
+    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1",
+    "platform": "iPhone",
+    "mobile": true,
+    "cpuCores": 4,
+    "memoryGB": null,
+    "screen": "390x844@3"
+  },
+  "engine": {
+    "engine": "MediaPipe Pose Landmarker (tasks-vision 0.10.14)",
+    "variant": "lite",
+    "requestedDelegate": "GPU",
+    "delegate": "GPU",
+    "modelSource": "local",
+    "loadMs": 3865
+  },
+  "camera": {
+    "facing": "user",
+    "resolution": "720x1280"
+  },
+  "criteria": {
+    "minFps": 15,
+    "maxLatencyMs": 500
+  },
+  "summary": {
+    "frames": 908,
+    "durationSec": 30.213,
+    "fpsMean": 30.020189984443782,
+    "inferenceMsMedian": 21,
+    "inferenceMsP95": 26,
+    "latencyMsMedian": 27,
+    "latencyMsP95": 38,
+    "latencyKind": "capture",
+    "detectionRate": 0.9559471365638766
+  },
+  "pass": {
+    "fpsPass": true,
+    "latencyPass": true
+  },
+  "reps": [
+    {
+      "index": 1,
+      "durationMs": 1269,
+      "minKnee": 73.92605251536551,
+      "maxLean": 34.70507631847597,
+      "deepEnough": true,
+      "leanFault": false,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "index": 2,
+      "durationMs": 1352,
+      "minKnee": 64.24232647632456,
+      "maxLean": 30.672336839201794,
+      "deepEnough": true,
+      "leanFault": false,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "index": 3,
+      "durationMs": 1298,
+      "minKnee": 72.1244146266441,
+      "maxLean": 25.874747801356076,
+      "deepEnough": true,
+      "leanFault": false,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "index": 4,
+      "durationMs": 1308,
+      "minKnee": 71.57738769589517,
+      "maxLean": 25.061257724115663,
+      "deepEnough": true,
+      "leanFault": false,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "index": 5,
+      "durationMs": 1275.0000000001164,
+      "minKnee": 61.015736228811804,
+      "maxLean": 27.1598438272557,
+      "deepEnough": true,
+      "leanFault": false,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "index": 6,
+      "durationMs": 1134,
+      "minKnee": 97.37134938543556,
+      "maxLean": 45.67752963275689,
+      "deepEnough": true,
+      "leanFault": true,
+      "ok": false,
+      "issues": [
+        "forward_lean"
+      ]
+    },
+    {
+      "index": 7,
+      "durationMs": 1299.0000000001164,
+      "minKnee": 79.02673430549777,
+      "maxLean": 40.42483106002098,
+      "deepEnough": true,
+      "leanFault": true,
+      "ok": false,
+      "issues": [
+        "forward_lean"
+      ]
+    },
+    {
+      "index": 8,
+      "durationMs": 1269,
+      "minKnee": 80.26726252356018,
+      "maxLean": 35.84558734850762,
+      "deepEnough": true,
+      "leanFault": false,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "index": 9,
+      "durationMs": 1299,
+      "minKnee": 57.93735043060849,
+      "maxLean": 29.107538551668014,
+      "deepEnough": true,
+      "leanFault": false,
+      "ok": true,
+      "issues": []
+    },
+    {
+      "index": 10,
+      "durationMs": 1298.9999999998836,
+      "minKnee": 75.14228904710981,
+      "maxLean": 28.54485963713182,
+      "deepEnough": true,
+      "leanFault": false,
+      "ok": true,
+      "issues": []
+    }
+  ],
+  "leanThreshold": 38
+}
