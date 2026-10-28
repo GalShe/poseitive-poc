@@ -51,3 +51,21 @@ import { EXERCISES } from '../js/exercises.js';
   assert.equal(s2.reps.length, 0);
   console.log('exercise engine tests: all passed');
 }
+
+// ---- סף אישי: אדם שהמרחק "התקין" אצלו גדול (0.45) לא יקבל התרעת שווא, ופתיחה מעל הבסיס שלו כן תזוהה
+{
+  const s = new ExerciseSession(EXERCISES.wrist_prayer);
+  let tt = 0; const reps = [];
+  const rep = (gapLow) => [40, 55, 70, 80, 85, 85, 85, 85, 85, 70, 55, 45].forEach((ext, i) => {
+    for (let k = 0; k < 6; k++) {
+      const gap = i >= 6 && i <= 8 ? gapLow : 0.45;      // הפתיחה (אם יש) קורה באמצע ההחזקה
+      const ev = s.push({ wristExtension: ext, palmHeelGap: gap, fingerDirection: 80, armsVisibility: 0.9 }, (tt += 33));
+      if (ev.rep) reps.push(ev.rep);
+    }
+  });
+  rep(0.45); rep(0.45); rep(0.66);
+  assert.equal(reps[0].calibration, true);
+  assert.ok(Math.abs(reps[0].baselines.palms_open - 0.45) < 1e-9);
+  assert.deepEqual(reps.map((r) => r.faults), [[], [], ['palms_open']]);
+  console.log('personal baseline tests: all passed');
+}

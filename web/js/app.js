@@ -54,11 +54,11 @@ function selectExercise(id) {
   $('setupText').textContent = `${d.name}: ${d.setup}`;
   $('hudPrimaryLbl').textContent = d.primary.label;
   // הסליידר שולט בסף של הטעות העיקרית
-  const f = mainFault(), base = f.above ?? f.below;
+  const f = mainFault(), base = f.relative ? f.relative.delta : (f.above ?? f.below);
   const isRatio = base < 2;
   const rng = $('rngThr');
   rng.min = isRatio ? 0.1 : Math.max(0, base - 30); rng.max = isRatio ? 1 : base + 30; rng.step = isRatio ? 0.01 : 1; rng.value = base;
-  $('lblThr').textContent = `סף: ${f.text}`;
+  $('lblThr').textContent = f.relative ? `רגישות: ${f.text} (מעל הבסיס האישי)` : `סף: ${f.text}`;
   $('outThr').textContent = isRatio ? (+base).toFixed(2) : `${base}°`;
   session = new ExerciseSession(d);
   smoothers = {};
@@ -239,6 +239,8 @@ function handleEvents(ev, m) {
   if (ev.lowVisibility) {
     showAlert('הגוף לא נראה במלואו', false, 800);
     voice.say(d.view === 'side' ? 'התרחקו מהמצלמה, שכל הגוף ייראה' : 'עמדו מול המצלמה, שהזרועות ייראו', { priority: 1, cooldownMs: 6000 });
+  } else if (session.calibrating && session.state === 'active') {
+    showAlert('חזרת כיול: בצעו את התרגיל נכון', true, 400);
   } else if (ev.liveFault) {
     showAlert(ev.liveFault.text, false, 600);
     voice.say(ev.liveFault.say, { priority: 2, cooldownMs: 2500 });
@@ -248,7 +250,9 @@ function handleEvents(ev, m) {
   if (ev.rep) {
     const rep = ev.rep;
     addRepToList($('repList'), rep, session);
-    if (rep.ok) {
+    if (rep.calibration) {
+      showAlert('הכיול הסתיים ✓', true, 1500); voice.say('הכיול הסתיים', { priority: 2, cooldownMs: 0 });
+    } else if (rep.ok) {
       showAlert(`חזרה ${rep.index} ✓`, true); voice.beep(990, 110); voice.count(rep.index);
     } else {
       const ids = [...rep.faults, ...rep.endIssues];
@@ -265,8 +269,9 @@ function addRepToList(list, rep, sess) {
   list.querySelector('.empty')?.remove();
   const d = sess.def;
   const ids = [...rep.faults, ...rep.endIssues];
-  const pills = ids.length ? ids.map((i) => `<span class="pill bad">${sess.issueText(i)}</span>`).join(' ') : '<span class="pill ok">תקין</span>';
-  const peaks = d.faults.map((f) => `<span class="muted">${f.text}: <b>${fmt(rep.peaks[f.id], (f.above ?? f.below) < 2 ? 2 : 0)}</b></span>`).join(' ');
+  const pills = rep.calibration ? '<span class="pill warn">חזרת כיול</span>' : ids.length ? ids.map((i) => `<span class="pill bad">${sess.issueText(i)}</span>`).join(' ') : '<span class="pill ok">תקין</span>';
+  const dec = (f) => ((f.relative?.delta ?? f.above ?? f.below) < 2 ? 2 : 0);
+  const peaks = d.faults.map((f) => `<span class="muted">${f.text}: <b>${fmt(rep.peaks[f.id], dec(f))}</b>${f.relative && Number.isFinite(rep.baselines?.[f.id]) ? ` (בסיס ${fmt(rep.baselines[f.id], dec(f))})` : ''}</span>`).join(' ');
   const li = document.createElement('li');
   li.innerHTML = `<span class="n">${rep.index}</span><span>${d.primary.label}: <b>${fmt(rep.primaryBest)}${d.primary.unit}</b></span>${peaks}<span>${fmt(rep.durationMs / 1000, 1)} שנ׳</span> ${pills}`;
   list.prepend(li);
@@ -437,8 +442,9 @@ function drawChart(canvas, frames, d, sess) {
   };
   const dash = (v, color) => { ctx.setLineDash([4, 4]); ctx.strokeStyle = color; ctx.beginPath(); ctx.moveTo(padL, Y(v)); ctx.lineTo(W - padR, Y(v)); ctx.stroke(); ctx.setLineDash([]); };
   line(d.primary.metric, col('--accent')); dash(d.primary.target, col('--muted'));
-  const f = d.faults[0], scale = (f.above ?? f.below) < 2 ? 100 : 1;   // יחסים מוצגים ×100
-  line(f.metric, col('--bad'), scale); dash(sess.thresholds[f.id] * scale, col('--bad'));
+  const f = d.faults[0], scale = (f.relative?.delta ?? f.above ?? f.below) < 2 ? 100 : 1;   // יחסים מוצגים ×100
+  line(f.metric, col('--bad'), scale);
+  const thr = sess.effectiveThreshold(f); if (thr !== null) dash(thr * scale, col('--bad'));
   $('chartLegend').innerHTML = `<span class="sw knee"></span>${d.primary.label} <span class="sw target"></span>יעד ${d.primary.target}° <span class="sw lean"></span>${f.text}${scale > 1 ? ' (×100)' : ''}`;
 }
 

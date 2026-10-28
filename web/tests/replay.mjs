@@ -19,7 +19,7 @@ export function replay(frames, exId, from = 0, to = Infinity) {
   return { reps: s.reps, live: live.filter((x) => x.id) };
 }
 
-if (process.argv[1].endsWith('replay.mjs') && process.argv[2]) {
+if (process.argv[1]?.endsWith('replay.mjs') && process.argv[2]) {
   const [file, ex, a, b] = process.argv.slice(2);
   const { reps, live } = replay(JSON.parse(readFileSync(file, 'utf8')), ex, +a || 0, +b || Infinity);
   for (const r of reps) console.log(`rep ${r.index} t=${(r.durationMs / 1000).toFixed(1)}s best=${r.primaryBest.toFixed(0)} faults=[${r.faults}] end=[${r.endIssues}] peaks=${JSON.stringify(Object.fromEntries(Object.entries(r.peaks).map(([k, v]) => [k, +v.toFixed(2)])))}`);

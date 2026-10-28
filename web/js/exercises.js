@@ -59,7 +59,7 @@ export const EXERCISES = {
     goal: 'שיפור כפיפת שורש כף היד לאחור',
     view: 'front',
     models: ['pose', 'hand'],
-    setup: 'הטלפון מקדימה, 1.5–2 מטר, פלג גוף עליון בפריים. כפות ידיים צמודות מול החזה, אצבעות למעלה, ומורידים לאט כשהכפות נשארות צמודות.',
+    setup: 'הטלפון מקדימה, 1.5–2 מטר, פלג גוף עליון בפריים. כפות ידיים צמודות מול החזה, אצבעות למעלה, ומורידים לאט כשהכפות נשארות צמודות. החזרה הראשונה היא חזרת כיול: בצעו אותה נכון.',
     metrics: ['wristExtension', 'palmHeelGap', 'palmTipGap', 'fingerDirection', 'armsVisibility'],
     robust: ['fingerDirection'],   // מודל כפות הידיים רועש כשהכפות צמודות: מסנן חציון במקום החלקה רגילה
     visibility: 'armsVisibility',
@@ -67,14 +67,16 @@ export const EXERCISES = {
     rep: { metric: 'wristExtension', enterAbove: 62, exitBelow: 52 },
     faults: [
       {
+        // סף יחסי: המרחק "התקין" בין שורשי כפות הידיים שונה מאדם לאדם (מבנה גוף, מרחק מהמצלמה).
+        // לכן החזרה הראשונה היא חזרת כיול: המערכת לומדת ממנה את הבסיס האישי, ומתריעה כשהמרחק עולה ביותר מ-delta מעליו.
+        id: 'palms_open', metric: 'palmHeelGap', relative: { delta: 0.12, calibrateReps: 1 }, live: true, priority: 1,
+        text: 'כפות הידיים נפתחות', say: 'הצמידו את כפות הידיים',
+        note: 'בהדגמה: תקין 0.23–0.28, פתיחה 0.41–0.47 (ביחס לרוחב הכתפיים), כלומר עלייה של 0.15–0.2 מעל הבסיס',
+      },
+      {
         id: 'fingers_down', metric: 'fingerDirection', below: 60, live: true, priority: 2,
         text: 'האצבעות לא מצביעות למעלה', say: 'אצבעות כלפי מעלה',
         note: 'בהדגמה: תקין 77°–85°, אצבעות קדימה ‎-3° עד 48°',
-      },
-      {
-        id: 'palms_open', metric: 'palmHeelGap', above: 0.36, live: true, priority: 1,
-        text: 'כפות הידיים נפתחות', say: 'הצמידו את כפות הידיים',
-        note: 'בהדגמה: תקין 0.23–0.28, פתיחה 0.41–0.47 (ביחס לרוחב הכתפיים)',
       },
     ],
     endOfRep: [
