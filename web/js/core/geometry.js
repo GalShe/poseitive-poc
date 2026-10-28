@@ -89,3 +89,15 @@ export class Ema {
   }
   reset() { this.value = null; }
 }
+
+// מסנן חציון על חלון קצר: מסיר קפיצות בודדות (outliers) בלי לעכב הרבה. שימושי למדדים רועשים כמו כיוון האצבעות
+export class Median {
+  constructor(n = 7) { this.n = n; this.buf = []; }
+  push(x) {
+    if (Number.isFinite(x)) { this.buf.push(x); if (this.buf.length > this.n) this.buf.shift(); }
+    if (!this.buf.length) return NaN;
+    const s = [...this.buf].sort((a, b) => a - b);
+    return s[Math.floor(s.length / 2)];
+  }
+  reset() { this.buf = []; }
+}

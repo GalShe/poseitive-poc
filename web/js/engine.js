@@ -3,7 +3,7 @@
 // כך, אם יוחלט לעבור למנוע אחר (למשל YOLO-Pose), מחליפים רק את הקובץ הזה.
 // (זו פעולת המנע לסיכון "שינוי או הפסקת תמיכה במנוע הזיהוי" שבטבלה 4.3.)
 
-import { FilesetResolver, PoseLandmarker } from '../vendor/tasks-vision/vision_bundle.mjs';
+import { FilesetResolver, PoseLandmarker, HandLandmarker } from '../vendor/tasks-vision/vision_bundle.mjs';
 
 const OFFICIAL_MODEL_URL = (variant) =>
   `https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_${variant}/float16/1/pose_landmarker_${variant}.task`;
@@ -69,5 +69,40 @@ export class PoseEngine {
   }
 }
 
+// מודל כפות ידיים (21 נקודות לכל יד). נטען רק לתרגילים שמצהירים עליו (models: ['pose','hand']),
+// כדי ששאר התרגילים לא ישלמו את מחיר הביצועים.
+export class HandEngine {
+  constructor() { this.landmarker = null; this.info = null; }
+
+  async init({ delegate = 'GPU' } = {}) {
+    if (this.landmarker) return this.info;
+    const t0 = performance.now();
+    const fileset = await FilesetResolver.forVisionTasks(WASM_BASE);
+    const url = new URL('../models/hand_landmarker.task', import.meta.url).href;
+    const make = (dlg) => HandLandmarker.createFromOptions(fileset, {
+      baseOptions: { modelAssetPath: url, delegate: dlg },
+      runningMode: 'VIDEO',
+      numHands: 2,
+      // ספים נמוכים: כשהכפות צמודות המודל פחות בטוח, ונבדק שכיוון היד עדיין נכון גם כך
+      minHandDetectionConfidence: 0.3,
+      minHandPresenceConfidence: 0.3,
+      minTrackingConfidence: 0.3,
+    });
+    let used = delegate;
+    try { this.landmarker = await make(delegate); } catch { used = 'CPU'; this.landmarker = await make('CPU'); }
+    this.info = { model: 'MediaPipe Hand Landmarker', delegate: used, loadMs: performance.now() - t0 };
+    return this.info;
+  }
+
+  detect(source, timestampMs) {
+    const t0 = performance.now();
+    const res = this.landmarker.detectForVideo(source, timestampMs);
+    return { hands: res.landmarks ?? [], inferenceMs: performance.now() - t0 };
+  }
+
+  close() { if (this.landmarker) { this.landmarker.close(); this.landmarker = null; } }
+}
+
 // חיבורי השלד לציור
 export const CONNECTIONS = PoseLandmarker.POSE_CONNECTIONS;
+export const HAND_CONNECTIONS = HandLandmarker.HAND_CONNECTIONS;

@@ -17,7 +17,7 @@
       <span class="logo" aria-hidden="true"></span>
       <div>
         <h1>Poseitive <small>POC</small></h1>
-        <p class="sub">הוכחת היתכנות · ניטור סקווט בזמן אמת</p>
+        <p class="sub">הוכחת היתכנות · ניטור תרגילי שיקום בזמן אמת</p>
       </div>
     </div>
     <nav class="tabs" role="tablist">
@@ -30,17 +30,21 @@
   <main>
     <!-- ===================== בדיקה חיה ===================== -->
     <section id="panel-live" class="panel" role="tabpanel">
+      <article class="card exercise-card">
+        <div class="ex-pick" id="exPick" role="radiogroup" aria-label="בחירת תרגיל"></div>
+        <dl class="kv ex-info" id="exInfo"></dl>
+      </article>
       <div class="stage-wrap">
         <div class="stage" id="stage">
           <video id="cam" playsinline muted></video>
           <canvas id="overlay"></canvas>
           <div class="placeholder" id="camPlaceholder">
-            <p>עמדו כך שהמצלמה רואה אתכם <b>מהצד</b>, מכף רגל ועד ראש, במרחק 2–4 מטרים.</p>
+            <p id="setupText">בחרו תרגיל ועמדו מול המצלמה לפי ההוראות.</p>
             <button class="primary" id="btnStartCam">הפעל מצלמה</button>
           </div>
           <div class="hud" id="hud" hidden>
             <div class="hud-big">
-              <div class="metric"><span class="lbl">זווית ברך</span><span class="val" id="hudKnee">–</span></div>
+              <div class="metric"><span class="lbl" id="hudPrimaryLbl">–</span><span class="val" id="hudPrimary">–</span></div>
               <div class="metric"><span class="lbl">חזרות</span><span class="val" id="hudReps">0</span></div>
             </div>
             <div class="hud-perf">
@@ -75,11 +79,13 @@
           <label for="inpDevice">דגם המכשיר</label>
           <input id="inpDevice" type="text" placeholder="למשל: iPhone 13 / Galaxy A52" autocomplete="off">
           <label class="check"><input type="checkbox" id="chkSound" checked> משוב קולי</label>
+          <button id="btnVoiceTest" type="button">בדיקת קול</button>
         </div>
+        <p class="status" id="voiceStatus"></p>
         <div class="row">
-          <label for="rngLean">סף הישענות יתר</label>
-          <input id="rngLean" type="range" min="5" max="45" step="1" value="38">
-          <output id="outLean">38°</output>
+          <label for="rngThr" id="lblThr">סף</label>
+          <input id="rngThr" type="range" min="0" max="100" step="1" value="50">
+          <output id="outThr">–</output>
         </div>
         <div class="row buttons">
           <button class="primary" id="btnTest" disabled>התחל בדיקת ביצועים (30 שניות)</button>
@@ -91,7 +97,7 @@
       <div class="cards">
         <article class="card" id="repCard">
           <h2>חזרות אחרונות</h2>
-          <ol class="reps" id="repList"><li class="empty">עוד אין חזרות. רדו לסקווט ועלו בחזרה.</li></ol>
+          <ol class="reps" id="repList"><li class="empty">עוד אין חזרות.</li></ol>
         </article>
 
         <article class="card" id="testCard" hidden>
@@ -112,7 +118,7 @@
     <section id="panel-video" class="panel" role="tabpanel" hidden>
       <article class="card">
         <h2>עיבוד סרטון על המכשיר הזה</h2>
-        <p>בוחרים סרטון סקווט מהגלריה. המכשיר מעבד אותו פריים אחר פריים, וכך נמדד כמה זמן עיבוד לוקח <b>על המעבד של המכשיר הזה</b>, ונבנה גרף של זווית הברך.</p>
+        <p>בוחרים סרטון של <b>התרגיל שנבחר בלשונית "בדיקה חיה"</b>. המכשיר מעבד אותו פריים אחר פריים, נמדד כמה זמן העיבוד לוקח <b>על המעבד של המכשיר הזה</b>, ונבנה גרף של המדד העיקרי ושל הטעות.</p>
         <div class="row">
           <label class="file">
             <input type="file" id="inpVideo" accept="video/*">
@@ -131,7 +137,7 @@
       <article class="card" id="vidResultCard" hidden>
         <h2>תוצאות הסרטון</h2>
         <canvas id="kneeChart" class="chart" height="220"></canvas>
-        <p class="legend"><span class="sw knee"></span>זווית ברך <span class="sw target"></span>יעד 90° <span class="sw lean"></span>הישענות יתר (גו מול שוק)</p>
+        <p class="legend" id="chartLegend"></p>
         <dl class="kv" id="vidResult"></dl>
         <ol class="reps" id="vidRepList"></ol>
         <div class="row buttons">

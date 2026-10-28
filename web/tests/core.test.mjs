@@ -33,3 +33,21 @@ const a = Array.from({ length: 60 }, (_, i) => 130 + 45 * Math.cos((2 * Math.PI 
 const b = Array.from({ length: 120 }, (_, i) => 130 + 45 * Math.cos((2 * Math.PI * i) / 119));
 assert.ok(dtwDistance(a, b) < 1);
 console.log('web core tests: all passed');
+
+// ---- מנוע התרגילים: הגדרה + סדרת מדדים סינתטית
+import { ExerciseSession } from '../js/core/exercise-engine.js';
+import { EXERCISES } from '../js/exercises.js';
+{
+  const s = new ExerciseSession(EXERCISES.shoulder_stick);
+  let tt = 0, reps = [];
+  const series = (lean) => [30, 60, 90, 120, 135, 135, 135, 120, 90, 60, 40, 30].map((e) => ({ shoulderElevation: e, shoulderTilt: e > 100 ? lean : 2, trunkLateral: 2, upperBodyVisibility: 0.9 }));
+  for (const lean of [3, 40, 3]) for (const m of series(lean)) for (let k = 0; k < 6; k++) { const ev = s.push(m, (tt += 33)); if (ev.rep) reps.push(ev.rep); }
+  assert.equal(reps.length, 3);
+  assert.deepEqual(reps.map((r) => r.ok), [true, false, true]);
+  assert.deepEqual(reps[1].faults, ['body_lean']);
+  // רעש קצר לא נספר כחזרה
+  const s2 = new ExerciseSession(EXERCISES.shoulder_stick);
+  for (const e of [30, 80, 30]) s2.push({ shoulderElevation: e, shoulderTilt: 2, upperBodyVisibility: 0.9 }, (tt += 33));
+  assert.equal(s2.reps.length, 0);
+  console.log('exercise engine tests: all passed');
+}
