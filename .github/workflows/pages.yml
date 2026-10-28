@@ -31,6 +31,14 @@ jobs:
           ref: main
       - name: Run browser logic tests
         run: node web/tests/core.test.mjs
+      - name: Stamp version (cache busting)
+        # GitHub Pages מאפשר לדפדפן לשמור קבצים במטמון ~10 דקות. מוסיפים ?v=<commit> לכל ייבוא,
+        # כך שאחרי כל פרסום הדפדפן טוען את הגרסה החדשה, ומציגים את מספר הגרסה בתחתית הדף.
+        run: |
+          V="${GITHUB_SHA::7}"
+          find web/js -name '*.js' -print0 | xargs -0 sed -i -E "s#(from '[^']+\.(js|mjs))'#\1?v=$V'#g"
+          sed -i -E "s#src=\"js/app\.js\"#src=\"js/app.js?v=$V\"#; s#href=\"styles\.css\"#href=\"styles.css?v=$V\"#; s#__VERSION__#$V#" web/index.html
+          grep -rn "?v=" web/js | head -5
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
